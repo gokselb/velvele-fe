@@ -5,6 +5,7 @@
 
 import { Avatar, TagBadge } from './ui';
 
+import Image from 'next/image';
 import type { PostWithAuthorAndTags } from '@velvele/lib/supabase';
 import { formatDateDistance } from '@velvele/lib/utils';
 
@@ -26,10 +27,12 @@ export function PostCard({ post, className }: PostCardProps) {
       {cover_url && (
         <div className="aspect-[16/9] overflow-hidden rounded-lg bg-gray-100">
           <a href={postUrl} className="block h-full w-full">
-            <img
+            <Image
               src={cover_url}
               alt={title}
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </a>
         </div>

@@ -83,28 +83,56 @@ const mockPosts = [
   },
 ];
 
-const sampleMarkdown = `# Sample Article Content
+const sampleMarkdown = `# Enhanced Markdown Features
 
-This is a demonstration of how **markdown content** looks with our typography system.
+Bu gelişmiş markdown bileşeni MDX benzeri kısayollar ve Türkçe tarih formatlaması destekler.
 
-## Key Features
+## Özel Blockquote Türleri
 
-- Clean, readable typography
-- Proper spacing and hierarchy
-- Responsive design
-- Accessible color contrast
+> info: Bu bir bilgi mesajıdır. Mavi renkte görünür.
 
-> "Good design is as little design as possible." - Dieter Rams
+> warning: Bu bir uyarı mesajıdır. Sarı renkte görünür.
 
-### Code Example
+> error: Bu bir hata mesajıdır. Kırmızı renkte görünür.
+
+> success: Bu bir başarı mesajıdır. Yeşil renkte görünür.
+
+> note: Bu bir not mesajıdır. Mor renkte görünür.
+
+## Resimler ve Başlıklar
+
+![Kod örneği | JavaScript kodu örneği](https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop)
+
+## Kod Örnekleri
 
 \`\`\`javascript
-function greet(name) {
-  return \`Hello, \${name}!\`;
+function merhaba() {
+  console.log("Merhaba, Dünya!");
+  return "Türkçe kod örneği";
 }
 \`\`\`
 
-The typography system provides excellent readability for long-form content while maintaining the clean, newsroom aesthetic.`;
+Inline kod: \`const x = 42;\`
+
+## Bağlantılar
+
+[Velvele Ana Sayfa](https://velvele.net)
+
+## Listeler
+
+### Sırasız Liste
+- Öğe 1
+- Öğe 2
+- Öğe 3
+
+### Sıralı Liste
+1. İlk
+2. İkinci
+3. Üçüncü
+
+## Tarih Formatlaması
+
+Bugün: ${new Date().toLocaleDateString('tr-TR')}`;
 
 export default function UIDemo() {
   return (

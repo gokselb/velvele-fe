@@ -5,6 +5,7 @@
 
 import { Avatar, TagBadge } from './ui';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import type { PostWithAuthorAndTags } from '@velvele/lib/supabase';
 import { formatDateDistance } from '@velvele/lib/utils';
@@ -21,10 +22,13 @@ export function Hero({ post }: HeroProps) {
   return (
     <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-gray-100">
       {cover_url && (
-        <img
+        <Image
           src={cover_url}
           alt={title}
-          className="h-full w-full object-cover"
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority
         />
       )}
 

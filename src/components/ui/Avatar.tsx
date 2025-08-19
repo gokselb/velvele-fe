@@ -3,6 +3,7 @@
  * Supports fallback initials and different sizes
  */
 
+import Image from 'next/image';
 import { cn } from '@velvele/lib/utils';
 
 interface AvatarProps {
@@ -50,10 +51,12 @@ export function Avatar({
       )}
     >
       {src ? (
-        <img
+        <Image
           src={src}
           alt={displayName}
-          className="h-full w-full rounded-full object-cover"
+          fill
+          className="rounded-full object-cover"
+          sizes="40px"
         />
       ) : null}
       {!src && <span className="select-none">{initials}</span>}

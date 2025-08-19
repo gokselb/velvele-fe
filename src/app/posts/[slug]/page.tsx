@@ -6,6 +6,7 @@
 import { Avatar, Container, Section, TagBadge } from '@velvele/components/ui';
 import { getPostBySlug, getRelatedPosts } from '@velvele/lib/blog/posts';
 
+import Image from 'next/image';
 import { Markdown } from '@velvele/components/Markdown';
 import { PostList } from '@velvele/components/PostList';
 import { formatDateDistance } from '@velvele/lib/utils';
@@ -46,10 +47,13 @@ export default async function PostPage({ params }: PostPageProps) {
         <Section spacing="lg">
           {post.cover_url && (
             <div className="mb-8 aspect-[16/9] overflow-hidden rounded-2xl bg-gray-100">
-              <img
+              <Image
                 src={post.cover_url}
                 alt={post.title}
-                className="h-full w-full object-cover"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                priority
               />
             </div>
           )}
