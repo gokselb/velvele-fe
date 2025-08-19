@@ -1,0 +1,24 @@
+{
+  "common": {
+    "welcome": "Hoş Geldiniz",
+    "home": "Ana Sayfa",
+    "about": "Hakkımızda",
+    "contact": "İletişim",
+    "language": "Dil"
+  },
+  "navigation": {
+    "menu": "Menü",
+    "close": "Kapat",
+    "open": "Aç"
+  },
+  "homepage": {
+    "title": "Velvele'ye Hoş Geldiniz",
+    "subtitle": "Yenilikçilikte güvenilir ortağınız",
+    "cta": "Başlayın"
+  },
+  "footer": {
+    "copyright": "© 2024 Velvele. Tüm hakları saklıdır.",
+    "privacy": "Gizlilik Politikası",
+    "terms": "Kullanım Şartları"
+  }
+}

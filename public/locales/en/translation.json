@@ -1,0 +1,24 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "language": "Language"
+  },
+  "navigation": {
+    "menu": "Menu",
+    "close": "Close",
+    "open": "Open"
+  },
+  "homepage": {
+    "title": "Welcome to Velvele",
+    "subtitle": "Your trusted partner in innovation",
+    "cta": "Get Started"
+  },
+  "footer": {
+    "copyright": "© 2024 Velvele. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  }
+}
