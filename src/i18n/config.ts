@@ -4,19 +4,6 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import tr from './locales/tr/translation.json';
 
-// Domain-based language detection
-const getLanguageFromDomain = (): string => {
-  if (typeof window !== 'undefined') {
-    const hostname = window.location.hostname;
-    if (hostname.startsWith('en.')) {
-      return 'en';
-    }
-    // Default to Turkish for velvele.net and other domains
-    return 'tr';
-  }
-  return 'tr'; // Default fallback
-};
-
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
@@ -29,7 +16,7 @@ i18n
         translation: tr,
       },
     },
-    lng: getLanguageFromDomain(), // Set language based on domain
+    lng: 'tr', // Default to Turkish, will be updated on client
     fallbackLng: 'tr', // Turkish as fallback
     debug: process.env.NODE_ENV === 'development',
 
