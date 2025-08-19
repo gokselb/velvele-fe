@@ -2,6 +2,7 @@ import './globals.css';
 
 import { Geist, Geist_Mono } from 'next/font/google';
 
+import { Analytics } from '@vercel/analytics/next';
 import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
 import { I18nProvider } from '../components/I18nProvider';
@@ -100,7 +101,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SpeedInsights />
         <I18nProvider>
           <div className="min-h-screen flex flex-col">
             <Header />
@@ -108,6 +108,8 @@ export default function RootLayout({
             <Footer />
           </div>
         </I18nProvider>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
