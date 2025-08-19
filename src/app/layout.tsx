@@ -6,6 +6,7 @@ import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
 import { I18nProvider } from '../components/I18nProvider';
 import type { Metadata } from 'next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -99,6 +100,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <SpeedInsights />
         <I18nProvider>
           <div className="min-h-screen flex flex-col">
             <Header />
