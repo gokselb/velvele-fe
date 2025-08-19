@@ -1,6 +1,8 @@
 import LanguageDetector from 'i18next-browser-languagedetector';
+import en from './locales/en/translation.json';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import tr from './locales/tr/translation.json';
 
 // Domain-based language detection
 const getLanguageFromDomain = (): string => {
@@ -21,14 +23,10 @@ i18n
   .init({
     resources: {
       en: {
-        translation: {
-          // English translations will be loaded from public/locales/en/translation.json
-        },
+        translation: en,
       },
       tr: {
-        translation: {
-          // Turkish translations will be loaded from public/locales/tr/translation.json
-        },
+        translation: tr,
       },
     },
     lng: getLanguageFromDomain(), // Set language based on domain

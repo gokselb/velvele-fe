@@ -27,10 +27,12 @@ export const useLanguage = () => {
       }
 
       // Construct new URL with language change
-      const newUrl = `${window.location.protocol}//${newHostname}${window.location.pathname}${window.location.search}`;
+      const newUrl = new URL(window.location.href);
+
+      newUrl.hostname = newHostname;
 
       // Redirect to new domain
-      window.location.href = newUrl;
+      window.location.href = newUrl.toString();
     }
   };
 
