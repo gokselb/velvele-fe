@@ -305,9 +305,40 @@ const components: Components = {
 };
 
 export function Markdown({ content, className }: MarkdownProps) {
+  // Custom remark plugin to prevent images from being wrapped in paragraphs
+  const preventImageInParagraph = () => (tree: unknown) => {
+    const visit = (node: Record<string, unknown>) => {
+      if (node.type === 'paragraph') {
+        // If paragraph contains only an image, unwrap it
+        if (
+          Array.isArray(node.children) &&
+          node.children.length === 1 &&
+          typeof node.children[0] === 'object' &&
+          node.children[0] &&
+          'type' in node.children[0] &&
+          node.children[0].type === 'image'
+        ) {
+          const imageNode = node.children[0] as Record<string, unknown>;
+          node.type = 'image';
+          node.url = imageNode.url;
+          node.alt = imageNode.alt;
+          node.title = imageNode.title;
+          delete node.children;
+        }
+      }
+      if (Array.isArray(node.children)) {
+        node.children.forEach(visit);
+      }
+    };
+    visit(tree as Record<string, unknown>);
+  };
+
   return (
     <div className={twMerge('prose prose-gray max-w-none', className)}>
-      <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm, preventImageInParagraph]}
+        components={components}
+      >
         {content}
       </ReactMarkdown>
     </div>
