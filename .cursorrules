@@ -1,0 +1,26 @@
+# Cursor Configuration Rules
+
+## Package Management
+
+- Always use YARN instead of npm
+- Use `yarn add` for installing packages
+- Use `yarn remove` for uninstalling packages
+- Use `yarn install` for installing dependencies
+- Use `yarn dev` for development server
+- Use `yarn build` for building the project
+- Use `yarn start` for starting the production server
+
+## Code Style
+
+- Follow TypeScript best practices
+- Use modern React patterns (hooks, functional components)
+- Prefer async/await over promises
+- Use meaningful variable and function names
+- Add proper TypeScript types
+
+## File Organization
+
+- Keep components in appropriate directories
+- Use consistent file naming conventions
+- Group related functionality together
+- Maintain clean import/export structure
