@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * Button component with consistent styling and variants
  * Supports different sizes, variants, and states

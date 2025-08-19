@@ -1,3 +1,4 @@
+'use client';
 /**
  * Enhanced Markdown component with MDX-like shortcodes
  * Supports blockquotes, callouts, image captions, and better typography

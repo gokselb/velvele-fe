@@ -1,3 +1,4 @@
+'use client';
 /**
  * PostList component for displaying a collection of blog posts
  * Supports grid and stack layouts with responsive design
