@@ -5,35 +5,17 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
+import { ListIcon, MagnifyingGlassIcon, XIcon } from '@phosphor-icons/react';
 
 import { Container } from './ui';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import Link from 'next/link';
 import { useLanguage } from '@velvele/hooks/useLanguage';
+import { useState } from 'react';
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [icons, setIcons] = useState<{
-    MagnifyingGlassIcon?: React.ComponentType<{
-      className?: string;
-      weight?: string;
-    }>;
-    XIcon?: React.ComponentType<{ className?: string; weight?: string }>;
-    ListIcon?: React.ComponentType<{ className?: string; weight?: string }>;
-  }>({});
   const { t } = useLanguage();
-
-  useEffect(() => {
-    // Dynamically import icons to avoid SSR issues
-    const loadIcons = async () => {
-      const { MagnifyingGlassIcon, XIcon, ListIcon } = await import(
-        '@phosphor-icons/react'
-      );
-      setIcons({ MagnifyingGlassIcon, XIcon, ListIcon });
-    };
-    loadIcons();
-  }, []);
 
   const navigation = [
     { name: t('common.home'), href: '/' },
@@ -77,12 +59,10 @@ export function Header() {
           <div className="hidden md:flex items-center">
             <div className="relative">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                {icons.MagnifyingGlassIcon && (
-                  <icons.MagnifyingGlassIcon
-                    className="h-5 w-5 text-gray-400"
-                    weight="regular"
-                  />
-                )}
+                <MagnifyingGlassIcon
+                  className="h-5 w-5 text-gray-400"
+                  weight="regular"
+                />
               </div>
               <input
                 type="text"
@@ -101,13 +81,11 @@ export function Header() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               <span className="sr-only">Open main menu</span>
-              {mobileMenuOpen
-                ? icons.XIcon && (
-                    <icons.XIcon className="h-6 w-6" weight="regular" />
-                  )
-                : icons.ListIcon && (
-                    <icons.ListIcon className="h-6 w-6" weight="regular" />
-                  )}
+              {mobileMenuOpen ? (
+                <XIcon className="h-6 w-6" weight="regular" />
+              ) : (
+                <ListIcon className="h-6 w-6" weight="regular" />
+              )}
             </button>
           </div>
         </div>
@@ -136,12 +114,10 @@ export function Header() {
               <div className="px-3">
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    {icons.MagnifyingGlassIcon && (
-                      <icons.MagnifyingGlassIcon
-                        className="h-5 w-5 text-gray-400"
-                        weight="regular"
-                      />
-                    )}
+                    <MagnifyingGlassIcon
+                      className="h-5 w-5 text-gray-400"
+                      weight="regular"
+                    />
                   </div>
                   <input
                     type="text"
