@@ -25,7 +25,7 @@ export function Header() {
 
   return (
     <header className="border-b border-gray-200 bg-white">
-      <Container>
+      <Container size="2xl">
         <div className="flex h-16 items-center justify-between">
           {/* Logo/Brand */}
           <div className="flex items-center">
@@ -51,25 +51,27 @@ export function Header() {
           </nav>
 
           {/* Language Switcher */}
-          <div className="hidden md:flex items-center">
-            <LanguageSwitcher />
-          </div>
+          <div className="flex items-center space-x-4">
+            <div className="hidden md:flex items-center">
+              <LanguageSwitcher />
+            </div>
 
-          {/* Search Placeholder */}
-          <div className="hidden md:flex items-center">
-            <div className="relative">
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <MagnifyingGlassIcon
-                  className="h-5 w-5 text-gray-400"
-                  weight="regular"
+            {/* Search Placeholder */}
+            <div className="hidden md:flex items-center">
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <MagnifyingGlassIcon
+                    className="h-5 w-5 text-gray-400"
+                    weight="regular"
+                  />
+                </div>
+                <input
+                  type="text"
+                  placeholder={t('common.search')}
+                  className="block w-64 rounded-md border-0 py-2 pl-10 pr-3 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+                  disabled
                 />
               </div>
-              <input
-                type="text"
-                placeholder={t('common.search')}
-                className="block w-64 rounded-md border-0 py-2 pl-10 pr-3 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                disabled
-              />
             </div>
           </div>
 
