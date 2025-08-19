@@ -15,6 +15,7 @@ import {
   SkeletonPost,
   TagBadge,
 } from '@velvele/components/ui';
+import { CaretLeftIcon, CaretRightIcon } from '@phosphor-icons/react';
 
 import { Markdown } from '@velvele/components/Markdown';
 import { PostList } from '@velvele/components/PostList';
@@ -248,19 +249,7 @@ export default function UIDemo() {
           </h2>
           <div className="flex items-center justify-center space-x-2">
             <Button variant="outline" size="sm" disabled>
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
+              <CaretLeftIcon className="h-4 w-4" weight="regular" />
               <span className="ml-1">Önceki</span>
             </Button>
 
@@ -284,19 +273,7 @@ export default function UIDemo() {
 
             <Button variant="outline" size="sm">
               <span className="mr-1">Sonraki</span>
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
+              <CaretRightIcon className="h-4 w-4" weight="regular" />
             </Button>
           </div>
         </Section>

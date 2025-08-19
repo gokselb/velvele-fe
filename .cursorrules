@@ -24,3 +24,12 @@
 - Use consistent file naming conventions
 - Group related functionality together
 - Maintain clean import/export structure
+
+## Icons
+
+- Always use Phosphor Icons from @phosphor-icons/react instead of inline SVG tags
+- Import specific icons from @phosphor-icons/react
+- Use appropriate icon weights (regular, fill, bold, etc.)
+- Maintain consistent sizing with className props
+- Add "Icon" affix at the end of icon names
+- Reference https://phosphoricons.com/ for available icons and usage

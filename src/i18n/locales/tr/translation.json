@@ -4,7 +4,10 @@
     "home": "Ana Sayfa",
     "about": "Hakkımızda",
     "contact": "İletişim",
-    "language": "Dil"
+    "language": "Dil",
+    "tags": "Etiketler",
+    "archive": "Arşiv",
+    "search": "Ara"
   },
   "navigation": {
     "menu": "Menü",

@@ -3,10 +3,11 @@
  * Supports grid and stack layouts with responsive design
  */
 
-import { EmptyState, SkeletonPost } from './ui';
-
+import { EmptyState } from './ui/EmptyState';
+import { FileTextIcon } from '@phosphor-icons/react';
 import { PostCard } from './PostCard';
 import type { PostWithAuthorAndTags } from '@velvele/lib/supabase';
+import { SkeletonPost } from './ui/Skeleton';
 import { twMerge } from 'tailwind-merge';
 
 interface PostListProps {
@@ -60,21 +61,7 @@ export function PostList({
           'There are no posts to display at the moment.'
         }
         action={emptyState?.action}
-        icon={
-          <svg
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-4.5A1.125 1.125 0 0110.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H6A1.125 1.125 0 004.875 3.5H3.375A1.125 1.125 0 002.25 4.625v4.875c0 .621.504 1.125 1.125 1.125h1.5c.621 0 1.125.504 1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125h4.5A1.125 1.125 0 0013.5 12.75h1.5c.621 0 1.125.504 1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125H18a2.25 2.25 0 002.25-2.25 2.25 2.25 0 00-2.25-2.25H19.5z"
-            />
-          </svg>
-        }
+        icon={<FileTextIcon className="h-6 w-6" weight="regular" />}
         className={className}
       />
     );

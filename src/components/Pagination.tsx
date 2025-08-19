@@ -5,9 +5,10 @@
 
 'use client';
 
+import { CaretLeftIcon, CaretRightIcon } from '@phosphor-icons/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { Button } from './ui';
+import { Button } from './ui/Button';
 import type { PaginationInfo } from '@velvele/lib/blog/posts';
 import { useCallback } from 'react';
 
@@ -115,19 +116,7 @@ export function Pagination({
         disabled={!hasPrevPage}
         className="flex items-center space-x-1"
       >
-        <svg
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
+        <CaretLeftIcon className="h-4 w-4" weight="regular" />
         <span>Önceki</span>
       </Button>
 
@@ -171,19 +160,7 @@ export function Pagination({
         className="flex items-center space-x-1"
       >
         <span>Sonraki</span>
-        <svg
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
+        <CaretRightIcon className="h-4 w-4" weight="regular" />
       </Button>
     </nav>
   );
@@ -211,19 +188,7 @@ export function SimplePagination({
         disabled={!hasPreviousPage}
         className="flex items-center space-x-2"
       >
-        <svg
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"
-          />
-        </svg>
+        <CaretLeftIcon className="h-4 w-4" weight="regular" />
         <span>Previous</span>
       </Button>
 
@@ -234,19 +199,7 @@ export function SimplePagination({
         className="flex items-center space-x-2"
       >
         <span>Next</span>
-        <svg
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M8.25 4.5l7.5 7.5-7.5 7.5"
-          />
-        </svg>
+        <CaretRightIcon className="h-4 w-4" weight="regular" />
       </Button>
     </div>
   );
