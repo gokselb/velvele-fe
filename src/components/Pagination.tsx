@@ -1,42 +1,80 @@
 /**
- * Pagination component for navigating through pages of content
- * Clean, accessible design with proper keyboard navigation
+ * Pagination component with URL handling
+ * Supports prev/next navigation and page numbers
  */
 
+'use client';
+
+import { useRouter, useSearchParams } from 'next/navigation';
+
 import { Button } from './ui';
+import type { PaginationInfo } from '@velvele/lib/blog/posts';
+import { useCallback } from 'react';
 
 interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
+  pagination: PaginationInfo;
   className?: string;
-  showFirstLast?: boolean;
-  maxVisiblePages?: number;
+  baseUrl?: string;
 }
 
 export function Pagination({
-  currentPage,
-  totalPages,
-  onPageChange,
-  className,
-  showFirstLast = true,
-  maxVisiblePages = 5,
+  pagination,
+  className = '',
+  baseUrl = '',
 }: PaginationProps) {
-  if (totalPages <= 1) return null;
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
+  const createPageUrl = useCallback(
+    (page: number) => {
+      const params = new URLSearchParams(searchParams);
+      if (page === 1) {
+        params.delete('page');
+      } else {
+        params.set('page', page.toString());
+      }
+      const queryString = params.toString();
+      return `${baseUrl}${queryString ? `?${queryString}` : ''}`;
+    },
+    [searchParams, baseUrl]
+  );
+
+  const navigateToPage = useCallback(
+    (page: number) => {
+      const url = createPageUrl(page);
+      router.push(url);
+    },
+    [router, createPageUrl]
+  );
+
+  const {
+    currentPage,
+    totalPages,
+    hasNextPage,
+    hasPrevPage,
+    nextPage,
+    prevPage,
+  } = pagination;
+
+  if (totalPages <= 1) {
+    return null;
+  }
+
+  // Generate page numbers to show
   const getVisiblePages = () => {
     const pages: (number | string)[] = [];
-    const halfVisible = Math.floor(maxVisiblePages / 2);
+    const maxVisible = 5;
+    const halfVisible = Math.floor(maxVisible / 2);
 
     let startPage = Math.max(1, currentPage - halfVisible);
     let endPage = Math.min(totalPages, currentPage + halfVisible);
 
     // Adjust if we're near the beginning or end
-    if (endPage - startPage + 1 < maxVisiblePages) {
+    if (endPage - startPage + 1 < maxVisible) {
       if (startPage === 1) {
-        endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+        endPage = Math.min(totalPages, startPage + maxVisible - 1);
       } else {
-        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        startPage = Math.max(1, endPage - maxVisible + 1);
       }
     }
 
@@ -64,94 +102,86 @@ export function Pagination({
     return pages;
   };
 
-  const visiblePages = getVisiblePages();
-
   return (
     <nav
-      className={`flex items-center justify-center space-x-1 ${
-        className || ''
-      }`}
+      className={`flex items-center justify-center space-x-2 ${className}`}
       aria-label="Pagination"
     >
-      {/* Previous button */}
+      {/* Previous Button */}
       <Button
-        variant="ghost"
+        variant="outline"
         size="sm"
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage <= 1}
-        aria-label="Go to previous page"
-        className="mr-2"
+        onClick={() => prevPage && navigateToPage(prevPage)}
+        disabled={!hasPrevPage}
+        className="flex items-center space-x-1"
       >
         <svg
           className="h-4 w-4"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={1.5}
           stroke="currentColor"
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
           />
         </svg>
-        Previous
+        <span>Önceki</span>
       </Button>
 
-      {/* Page numbers */}
+      {/* Page Numbers */}
       <div className="flex items-center space-x-1">
-        {visiblePages.map((page, index) => {
+        {getVisiblePages().map((page, index) => {
           if (page === '...') {
             return (
               <span
                 key={`ellipsis-${index}`}
-                className="px-2 py-1 text-gray-500"
+                className="px-3 py-2 text-gray-500"
               >
                 ...
               </span>
             );
           }
 
-          const pageNumber = page as number;
-          const isCurrentPage = pageNumber === currentPage;
+          const pageNum = page as number;
+          const isCurrentPage = pageNum === currentPage;
 
           return (
             <Button
-              key={pageNumber}
-              variant={isCurrentPage ? 'primary' : 'ghost'}
+              key={pageNum}
+              variant={isCurrentPage ? 'primary' : 'outline'}
               size="sm"
-              onClick={() => onPageChange(pageNumber)}
-              aria-label={`Go to page ${pageNumber}`}
-              aria-current={isCurrentPage ? 'page' : undefined}
-              className="min-w-[2.5rem]"
+              onClick={() => navigateToPage(pageNum)}
+              className="min-w-[40px]"
             >
-              {pageNumber}
+              {pageNum}
             </Button>
           );
         })}
       </div>
 
-      {/* Next button */}
+      {/* Next Button */}
       <Button
-        variant="ghost"
+        variant="outline"
         size="sm"
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage >= totalPages}
-        aria-label="Go to next page"
-        className="ml-2"
+        onClick={() => nextPage && navigateToPage(nextPage)}
+        disabled={!hasNextPage}
+        className="flex items-center space-x-1"
       >
-        Next
+        <span>Sonraki</span>
         <svg
           className="h-4 w-4"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={1.5}
           stroke="currentColor"
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="M8.25 4.5l7.5 7.5-7.5 7.5"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
           />
         </svg>
       </Button>

@@ -1,67 +1,90 @@
-'use client';
+/**
+ * Homepage - Server component
+ * Displays hero post and paginated feed
+ */
 
-import { LanguageSwitcher } from '../components/LanguageSwitcher';
-import { useLanguage } from '../hooks/useLanguage';
+import { Container, Section } from '@velvele/components/ui';
+import { getLatestPosts, listPosts } from '@velvele/lib/blog/posts';
 
-export default function Home() {
-  const { t, currentLanguage } = useLanguage();
+import { Hero } from '@velvele/components/Hero';
+import { Pagination } from '@velvele/components/Pagination';
+import { PostList } from '@velvele/components/PostList';
+
+interface HomePageProps {
+  searchParams: Promise<{
+    page?: string;
+  }>;
+}
+
+// Revalidate every 60 seconds for fresh content
+export const revalidate = 60;
+
+export default async function HomePage({ searchParams }: HomePageProps) {
+  const params = await searchParams;
+  const page = parseInt(params.page || '1', 10);
+
+  // Fetch latest post for hero
+  const latestPosts = await getLatestPosts('tr', 1);
+  const heroPost = latestPosts[0];
+
+  // Fetch posts for feed (excluding hero post)
+  const feedResult = await listPosts({
+    page,
+    limit: 12,
+    lang: 'tr',
+  });
+
+  // Filter out hero post from feed if it exists
+  const feedPosts = heroPost
+    ? feedResult.posts.filter((post) => post.id !== heroPost.id)
+    : feedResult.posts;
 
   return (
-    <div className="font-sans min-h-screen p-8 pb-20">
-      {/* Header with language switcher */}
-      <header className="flex justify-between items-center mb-16">
-        <h1 className="text-2xl font-bold">Velvele</h1>
-        <LanguageSwitcher />
-      </header>
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      {heroPost && (
+        <Container>
+          <Section spacing="xl">
+            <Hero post={heroPost} />
+          </Section>
+        </Container>
+      )}
 
-      {/* Main content */}
-      <main className="max-w-4xl mx-auto text-center">
-        <div className="mb-12">
-          <h2 className="text-5xl font-bold mb-6">{t('homepage.title')}</h2>
-          <p className="text-xl text-gray-600 mb-8">{t('homepage.subtitle')}</p>
-          <button className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-blue-700 transition-colors">
-            {t('homepage.cta')}
-          </button>
-        </div>
+      {/* Feed Section */}
+      <Container>
+        <Section spacing="xl">
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+              Son Yazılar
+            </h2>
+            <p className="mt-2 text-gray-600">
+              En güncel blog yazılarımızı keşfedin
+            </p>
+          </div>
 
-        {/* Language info */}
-        <div className="bg-gray-100 p-6 rounded-lg">
-          <p className="text-gray-700">
-            Current language: <strong>{currentLanguage.toUpperCase()}</strong>
-          </p>
-          <p className="text-sm text-gray-500 mt-2">
-            {currentLanguage === 'tr'
-              ? 'velvele.net - Türkçe (varsayılan)'
-              : 'en.velvele.net - English'}
-          </p>
-        </div>
+          {feedPosts.length > 0 ? (
+            <>
+              <PostList
+                posts={feedPosts}
+                layout="grid"
+                emptyState={{
+                  title: 'Henüz yazı yok',
+                  description: 'Blog yazıları yakında eklenecek.',
+                }}
+              />
 
-        {/* Navigation example */}
-        <nav className="mt-12 flex justify-center space-x-8">
-          <a href="#" className="text-blue-600 hover:underline">
-            {t('common.home')}
-          </a>
-          <a href="#" className="text-blue-600 hover:underline">
-            {t('common.about')}
-          </a>
-          <a href="#" className="text-blue-600 hover:underline">
-            {t('common.contact')}
-          </a>
-        </nav>
-      </main>
-
-      {/* Footer */}
-      <footer className="mt-20 text-center text-gray-600">
-        <p className="mb-4">{t('footer.copyright')}</p>
-        <div className="flex justify-center space-x-6 text-sm">
-          <a href="#" className="hover:underline">
-            {t('footer.privacy')}
-          </a>
-          <a href="#" className="hover:underline">
-            {t('footer.terms')}
-          </a>
-        </div>
-      </footer>
+              {/* Pagination */}
+              <div className="mt-12">
+                <Pagination pagination={feedResult.pagination} />
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500">Henüz yazı bulunmuyor.</p>
+            </div>
+          )}
+        </Section>
+      </Container>
     </div>
   );
 }

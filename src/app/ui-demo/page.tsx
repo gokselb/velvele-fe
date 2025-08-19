@@ -17,7 +17,6 @@ import {
 } from '@velvele/components/ui';
 
 import { Markdown } from '@velvele/components/Markdown';
-import { Pagination } from '@velvele/components/Pagination';
 import { PostList } from '@velvele/components/PostList';
 
 // Mock data for demonstration
@@ -219,11 +218,59 @@ export default function UIDemo() {
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">
             Pagination
           </h2>
-          <Pagination
-            currentPage={3}
-            totalPages={10}
-            onPageChange={(page) => console.log('Go to page:', page)}
-          />
+          <div className="flex items-center justify-center space-x-2">
+            <Button variant="outline" size="sm" disabled>
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+              <span className="ml-1">Önceki</span>
+            </Button>
+
+            <div className="flex items-center space-x-1">
+              <Button variant="outline" size="sm">
+                1
+              </Button>
+              <Button variant="outline" size="sm">
+                2
+              </Button>
+              <Button variant="primary" size="sm">
+                3
+              </Button>
+              <Button variant="outline" size="sm">
+                4
+              </Button>
+              <Button variant="outline" size="sm">
+                5
+              </Button>
+            </div>
+
+            <Button variant="outline" size="sm">
+              <span className="mr-1">Sonraki</span>
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </Button>
+          </div>
         </Section>
       </Container>
 
