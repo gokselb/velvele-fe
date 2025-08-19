@@ -7,6 +7,7 @@ import { Container, Section } from '@velvele/components/ui';
 import { getLatestPosts, listPosts } from '@velvele/lib/blog/posts';
 
 import { Hero } from '@velvele/components/Hero';
+import type { Metadata } from 'next';
 import { Pagination } from '@velvele/components/Pagination';
 import { PostList } from '@velvele/components/PostList';
 
@@ -18,6 +19,26 @@ interface HomePageProps {
 
 // Revalidate every 60 seconds for fresh content
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: 'Velvele — Güncel yazılar',
+  description:
+    'Teknoloji, yazılım ve dijital dünya hakkında güncel blog yazıları. En son trendleri ve gelişmeleri keşfedin.',
+  openGraph: {
+    title: 'Velvele — Güncel yazılar',
+    description:
+      'Teknoloji, yazılım ve dijital dünya hakkında güncel blog yazıları.',
+    type: 'website',
+    url: 'https://velvele.net',
+    siteName: 'Velvele',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Velvele — Güncel yazılar',
+    description:
+      'Teknoloji, yazılım ve dijital dünya hakkında güncel blog yazıları.',
+  },
+};
 
 export default async function HomePage({ searchParams }: HomePageProps) {
   const params = await searchParams;
@@ -51,7 +72,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       )}
 
       {/* Feed Section */}
-      <Container>
+      <Container size="2xl">
         <Section spacing="xl">
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">

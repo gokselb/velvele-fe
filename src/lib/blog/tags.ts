@@ -62,15 +62,28 @@ export async function getAllTags(
 }
 
 /**
- * Get a single tag by slug
+ * Get a single tag by slug with post count
  */
-export async function getTagBySlug(slug: string): Promise<Tag | null> {
+export async function getTagBySlug(slug: string): Promise<TagWithCount | null> {
   const supabase = await createServerClient();
 
   const { data: tags, error } = await supabase
     .from('tags')
-    .select('*')
+    .select(
+      `
+      *,
+      post_count:post_tags!inner(
+        post:posts!inner(
+          id
+        )
+      )
+    `
+    )
     .eq('slug', slug)
+    .eq('post_tags.post.lang', 'tr')
+    .eq('post_tags.post.status', 'published')
+    .not('post_tags.post.published_at', 'is', null)
+    .lte('post_tags.post.published_at', new Date().toISOString())
     .limit(1);
 
   if (error) {
@@ -78,5 +91,22 @@ export async function getTagBySlug(slug: string): Promise<Tag | null> {
     return null;
   }
 
-  return tags?.[0] || null;
+  if (!tags?.[0]) {
+    return null;
+  }
+
+  // Count posts for this tag
+  const { count: postCount } = await supabase
+    .from('post_tags')
+    .select('*', { count: 'exact', head: true })
+    .eq('tag_id', tags[0].id)
+    .eq('post.lang', 'tr')
+    .eq('post.status', 'published')
+    .not('post.published_at', 'is', null)
+    .lte('post.published_at', new Date().toISOString());
+
+  return {
+    ...tags[0],
+    post_count: postCount || 0,
+  };
 }

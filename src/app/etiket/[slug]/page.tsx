@@ -5,6 +5,7 @@
 
 import { Container, Section, TagBadge } from '@velvele/components/ui';
 
+import type { Metadata } from 'next';
 import { Pagination } from '@velvele/components/Pagination';
 import { PostList } from '@velvele/components/PostList';
 import { getTagBySlug } from '@velvele/lib/blog/tags';
@@ -22,6 +23,43 @@ interface TagPageProps {
 
 // Revalidate every 60 seconds for fresh content
 export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: TagPageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const tag = await getTagBySlug(resolvedParams.slug);
+
+  if (!tag) {
+    return {
+      title: 'Etiket Bulunamadı | Velvele',
+      description: 'Aradığınız etiket bulunamadı.',
+    };
+  }
+
+  const title = `${tag.name} Etiketi | Velvele`;
+  const description = `${tag.name} etiketi ile ilgili ${tag.post_count} yazı bulundu. Teknoloji, yazılım ve dijital dünya hakkında yazılar.`;
+  const canonical = `https://velvele.net/etiket/${tag.slug}`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title: `${tag.name} Etiketi | Velvele`,
+      description: `${tag.name} etiketi ile ilgili ${tag.post_count} yazı bulundu.`,
+      type: 'website',
+      url: canonical,
+    },
+    twitter: {
+      card: 'summary',
+      title: `${tag.name} Etiketi | Velvele`,
+      description: `${tag.name} etiketi ile ilgili ${tag.post_count} yazı bulundu.`,
+    },
+  };
+}
 
 export default async function TagPage({ params, searchParams }: TagPageProps) {
   const resolvedParams = await params;

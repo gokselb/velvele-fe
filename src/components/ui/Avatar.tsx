@@ -4,7 +4,7 @@
  */
 
 import Image from 'next/image';
-import { cn } from '@velvele/lib/utils';
+import { twMerge } from 'tailwind-merge';
 
 interface AvatarProps {
   src?: string | null;
@@ -15,10 +15,10 @@ interface AvatarProps {
 }
 
 const sizeClasses = {
-  sm: 'h-8 w-8 text-xs',
-  md: 'h-10 w-10 text-sm',
-  lg: 'h-12 w-12 text-base',
-  xl: 'h-16 w-16 text-lg',
+  sm: twMerge('h-8 w-8 text-xs'),
+  md: twMerge('h-10 w-10 text-sm'),
+  lg: twMerge('h-12 w-12 text-base'),
+  xl: twMerge('h-16 w-16 text-lg'),
 };
 
 function getInitials(name: string): string {
@@ -44,7 +44,7 @@ export function Avatar({
 
   return (
     <div
-      className={cn(
+      className={twMerge(
         'relative inline-flex items-center justify-center rounded-full bg-gray-100 font-medium text-gray-600',
         sizeClasses[size],
         className

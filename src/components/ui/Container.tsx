@@ -3,19 +3,20 @@
  * Provides centered content with responsive max-widths
  */
 
-import { cn } from '@velvele/lib/utils';
+import { twMerge } from 'tailwind-merge';
 
 interface ContainerProps {
   children: React.ReactNode;
   className?: string;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 }
 
 const sizeClasses = {
-  sm: 'max-w-2xl',
-  md: 'max-w-3xl',
-  lg: 'max-w-4xl',
-  xl: 'max-w-6xl',
+  sm: twMerge('max-w-2xl'),
+  md: twMerge('max-w-3xl'),
+  lg: twMerge('max-w-4xl'),
+  xl: twMerge('max-w-7xl'),
+  '2xl': twMerge('max-w-screen-xl'),
 };
 
 export function Container({
@@ -25,7 +26,7 @@ export function Container({
 }: ContainerProps) {
   return (
     <div
-      className={cn(
+      className={twMerge(
         'mx-auto w-full px-4 sm:px-6 lg:px-8',
         sizeClasses[size],
         className

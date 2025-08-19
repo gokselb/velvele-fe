@@ -3,8 +3,8 @@
  * Supports different sizes, variants, and states
  */
 
-import { cn } from '@velvele/lib/utils';
 import { forwardRef } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'outline';
@@ -14,20 +14,24 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantClasses = {
-  primary:
-    'bg-gray-900 text-white hover:bg-gray-800 focus:ring-gray-900 border-transparent',
-  secondary:
-    'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500 border-transparent',
-  ghost:
-    'bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-500 border-transparent',
-  outline:
-    'bg-transparent text-gray-700 hover:bg-gray-50 focus:ring-gray-500 border-gray-300',
+  primary: twMerge(
+    'bg-gray-900 text-white hover:bg-gray-800 focus:ring-gray-900 border-transparent'
+  ),
+  secondary: twMerge(
+    'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500 border-transparent'
+  ),
+  ghost: twMerge(
+    'bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-500 border-transparent'
+  ),
+  outline: twMerge(
+    'bg-transparent text-gray-700 hover:bg-gray-50 focus:ring-gray-500 border-gray-300'
+  ),
 };
 
 const sizeClasses = {
-  sm: 'px-3 py-1.5 text-sm',
-  md: 'px-4 py-2 text-sm',
-  lg: 'px-6 py-3 text-base',
+  sm: twMerge('px-3 py-1.5 text-sm'),
+  md: twMerge('px-4 py-2 text-sm'),
+  lg: twMerge('px-6 py-3 text-base'),
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -45,7 +49,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     return (
       <button
-        className={cn(
+        className={twMerge(
           // Base styles
           'inline-flex items-center justify-center rounded-md border font-medium transition-colors',
           'focus:outline-none focus:ring-2 focus:ring-offset-2',

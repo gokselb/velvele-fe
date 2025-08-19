@@ -32,12 +32,12 @@ export function PostList({
 }: PostListProps) {
   // Loading state
   if (loading) {
-    const skeletonCount = layout === 'grid' ? 6 : 3;
+    const skeletonCount = layout === 'grid' ? 8 : 3;
     return (
       <div
         className={`${
           layout === 'grid'
-            ? 'grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'
+            ? 'grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
             : 'space-y-12'
         } ${className || ''}`}
       >
@@ -83,7 +83,7 @@ export function PostList({
     <div
       className={`${
         layout === 'grid'
-          ? 'grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'
+          ? 'grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
           : 'space-y-12'
       } ${className || ''}`}
     >

@@ -3,7 +3,7 @@
  * Provides smooth loading animations with different shapes
  */
 
-import { cn } from '@velvele/lib/utils';
+import { twMerge } from 'tailwind-merge';
 
 interface SkeletonProps {
   className?: string;
@@ -20,12 +20,12 @@ export function Skeleton({
   height,
   lines = 1,
 }: SkeletonProps) {
-  const baseClasses = 'animate-pulse bg-gray-200';
+  const baseClasses = twMerge('animate-pulse bg-gray-200');
 
   const variantClasses = {
-    text: 'h-4 rounded',
-    circular: 'rounded-full',
-    rectangular: 'rounded-md',
+    text: twMerge('h-4 rounded'),
+    circular: twMerge('rounded-full'),
+    rectangular: twMerge('rounded-md'),
   };
 
   const style: React.CSSProperties = {};
@@ -35,11 +35,11 @@ export function Skeleton({
 
   if (variant === 'text' && lines > 1) {
     return (
-      <div className={cn('space-y-2', className)}>
+      <div className={twMerge('space-y-2', className)}>
         {Array.from({ length: lines }).map((_, index) => (
           <div
             key={index}
-            className={cn(
+            className={twMerge(
               baseClasses,
               variantClasses.text,
               index === lines - 1 && 'w-3/4' // Last line is shorter
@@ -53,7 +53,7 @@ export function Skeleton({
 
   return (
     <div
-      className={cn(baseClasses, variantClasses[variant], className)}
+      className={twMerge(baseClasses, variantClasses[variant], className)}
       style={style}
     />
   );

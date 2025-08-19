@@ -3,7 +3,7 @@
  * Clean, minimal design with hover states
  */
 
-import { cn } from '@velvele/lib/utils';
+import { twMerge } from 'tailwind-merge';
 
 interface TagBadgeProps {
   children: React.ReactNode;
@@ -15,9 +15,10 @@ interface TagBadgeProps {
 }
 
 const variantClasses = {
-  default: 'bg-gray-100 text-gray-700 hover:bg-gray-200',
-  outline:
-    'bg-transparent text-gray-600 border border-gray-300 hover:bg-gray-50',
+  default: twMerge('bg-gray-100 text-gray-700 hover:bg-gray-200'),
+  outline: twMerge(
+    'bg-transparent text-gray-600 border border-gray-300 hover:bg-gray-50'
+  ),
 };
 
 const sizeClasses = {
@@ -33,7 +34,7 @@ export function TagBadge({
   size = 'sm',
   onClick,
 }: TagBadgeProps) {
-  const baseClasses = cn(
+  const baseClasses = twMerge(
     'inline-flex items-center rounded-full font-medium transition-colors',
     'focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2',
     variantClasses[variant],

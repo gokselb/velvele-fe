@@ -5,6 +5,7 @@
 
 import { Container, Section } from '@velvele/components/ui';
 
+import type { Metadata } from 'next';
 import { Pagination } from '@velvele/components/Pagination';
 import { PostList } from '@velvele/components/PostList';
 import { listPosts } from '@velvele/lib/blog/posts';
@@ -17,6 +18,23 @@ interface ArchivePageProps {
 
 // Revalidate every 60 seconds for fresh content
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: 'Arşiv | Velvele',
+  description:
+    'Tüm blog yazılarımızı kronolojik sırayla keşfedin. Teknoloji, yazılım ve dijital dünya hakkında yazılar.',
+  openGraph: {
+    title: 'Arşiv | Velvele',
+    description: 'Tüm blog yazılarımızı kronolojik sırayla keşfedin.',
+    type: 'website',
+    url: 'https://velvele.net/arsiv',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Arşiv | Velvele',
+    description: 'Tüm blog yazılarımızı kronolojik sırayla keşfedin.',
+  },
+};
 
 export default async function ArchivePage({ searchParams }: ArchivePageProps) {
   const params = await searchParams;

@@ -8,6 +8,7 @@ import { getPostBySlug, getRelatedPosts } from '@velvele/lib/blog/posts';
 
 import Image from 'next/image';
 import { Markdown } from '@velvele/components/Markdown';
+import type { Metadata } from 'next';
 import { PostList } from '@velvele/components/PostList';
 import { formatDateDistance } from '@velvele/lib/utils';
 import { notFound } from 'next/navigation';
@@ -20,6 +21,66 @@ interface PostPageProps {
 
 // Revalidate every 5 minutes for post content
 export const revalidate = 300;
+
+export async function generateMetadata({
+  params,
+}: PostPageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const post = await getPostBySlug({
+    slug: resolvedParams.slug,
+    lang: 'tr',
+  });
+
+  if (!post) {
+    return {
+      title: 'Yazı Bulunamadı | Velvele',
+      description: 'Aradığınız yazı bulunamadı.',
+    };
+  }
+
+  const title = `${post.title} | Velvele`;
+  const description = post.excerpt || `${post.title} - Velvele blog yazısı`;
+  const canonical = `https://velvele.net/posts/${post.slug}`;
+
+  const openGraph: Metadata['openGraph'] = {
+    title: post.title,
+    description: post.excerpt || '',
+    type: 'article',
+    url: canonical,
+    images: post.cover_url
+      ? [
+          {
+            url: post.cover_url,
+            width: 1200,
+            height: 630,
+            alt: post.title,
+          },
+        ]
+      : [],
+    authors: post.author ? [post.author.name] : [],
+    publishedTime: post.published_at || undefined,
+    modifiedTime: post.updated_at || undefined,
+  };
+
+  const twitter: Metadata['twitter'] = {
+    card: 'summary_large_image',
+    title: post.title,
+    description: post.excerpt || '',
+    images: post.cover_url ? [post.cover_url] : [],
+  };
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical,
+    },
+    openGraph,
+    twitter,
+    authors: post.author ? [{ name: post.author.name }] : [],
+    keywords: post.tags?.map((tag) => tag.name).join(', '),
+  };
+}
 
 export default async function PostPage({ params }: PostPageProps) {
   const resolvedParams = await params;
@@ -46,13 +107,13 @@ export default async function PostPage({ params }: PostPageProps) {
       <Container>
         <Section spacing="lg">
           {post.cover_url && (
-            <div className="mb-8 aspect-[16/9] overflow-hidden rounded-2xl bg-gray-100">
+            <div className="mb-8 aspect-[21/9] overflow-hidden rounded-2xl bg-gray-100">
               <Image
                 src={post.cover_url}
                 alt={post.title}
                 fill
                 className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1200px"
                 priority
               />
             </div>

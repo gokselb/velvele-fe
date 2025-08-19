@@ -6,8 +6,8 @@
 import type { Components } from 'react-markdown';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
-import { cn } from '@velvele/lib/utils';
 import remarkGfm from 'remark-gfm';
+import { twMerge } from 'tailwind-merge';
 
 interface MarkdownProps {
   content: string;
@@ -27,16 +27,16 @@ const components: Components = {
       if (type) {
         const [, quoteType, quoteText] = type;
         const typeStyles = {
-          info: 'border-blue-200 bg-blue-50 text-blue-800',
-          warning: 'border-yellow-200 bg-yellow-50 text-yellow-800',
-          error: 'border-red-200 bg-red-50 text-red-800',
-          success: 'border-green-200 bg-green-50 text-green-800',
-          note: 'border-purple-200 bg-purple-50 text-purple-800',
+          info: twMerge('border-blue-200 bg-blue-50 text-blue-800'),
+          warning: twMerge('border-yellow-200 bg-yellow-50 text-yellow-800'),
+          error: twMerge('border-red-200 bg-red-50 text-red-800'),
+          success: twMerge('border-green-200 bg-green-50 text-green-800'),
+          note: twMerge('border-purple-200 bg-purple-50 text-purple-800'),
         };
 
         return (
           <div
-            className={cn(
+            className={twMerge(
               'my-6 rounded-lg border-l-4 p-4',
               typeStyles[quoteType as keyof typeof typeStyles] ||
                 typeStyles.info
@@ -123,7 +123,7 @@ const components: Components = {
     // Regular blockquote
     return (
       <blockquote
-        className={cn(
+        className={twMerge(
           'my-6 border-l-4 border-gray-300 bg-gray-50 pl-4 italic text-gray-700',
           className
         )}
@@ -155,7 +155,7 @@ const components: Components = {
               src={src}
               alt={imageAlt || ''}
               fill
-              className={cn('object-cover', className)}
+              className={twMerge('object-cover', className)}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
@@ -174,7 +174,7 @@ const components: Components = {
         <img
           src={src}
           alt={imageAlt || ''}
-          className={cn('w-full rounded-lg', className)}
+          className={twMerge('w-full rounded-lg', className)}
           {...props}
         />
         {caption && (
@@ -189,7 +189,7 @@ const components: Components = {
   // Enhanced headings with better spacing and typography
   h1: ({ children, className, ...props }) => (
     <h1
-      className={cn(
+      className={twMerge(
         'mb-6 mt-8 text-3xl font-bold text-gray-900 first:mt-0',
         className
       )}
@@ -201,7 +201,7 @@ const components: Components = {
 
   h2: ({ children, className, ...props }) => (
     <h2
-      className={cn(
+      className={twMerge(
         'mb-4 mt-8 text-2xl font-semibold text-gray-900 first:mt-0',
         className
       )}
@@ -213,7 +213,7 @@ const components: Components = {
 
   h3: ({ children, className, ...props }) => (
     <h3
-      className={cn(
+      className={twMerge(
         'mb-3 mt-6 text-xl font-semibold text-gray-900 first:mt-0',
         className
       )}
@@ -225,7 +225,7 @@ const components: Components = {
 
   h4: ({ children, className, ...props }) => (
     <h4
-      className={cn(
+      className={twMerge(
         'mb-2 mt-4 text-lg font-medium text-gray-900 first:mt-0',
         className
       )}
@@ -239,7 +239,7 @@ const components: Components = {
   a: ({ children, href, className, ...props }) => (
     <a
       href={href}
-      className={cn(
+      className={twMerge(
         'text-blue-600 underline decoration-blue-300 underline-offset-2 hover:text-blue-800 hover:decoration-blue-500',
         className
       )}
@@ -258,7 +258,7 @@ const components: Components = {
     if (isInline) {
       return (
         <code
-          className={cn(
+          className={twMerge(
             'rounded bg-gray-100 px-1.5 py-0.5 text-sm font-mono text-gray-800',
             className
           )}
@@ -271,7 +271,7 @@ const components: Components = {
 
     return (
       <code
-        className={cn(
+        className={twMerge(
           'block rounded-lg bg-gray-900 p-4 text-sm text-gray-100',
           className
         )}
@@ -285,7 +285,10 @@ const components: Components = {
   // Enhanced lists
   ul: ({ children, className, ...props }) => (
     <ul
-      className={cn('my-4 list-disc space-y-2 pl-6 text-gray-700', className)}
+      className={twMerge(
+        'my-4 list-disc space-y-2 pl-6 text-gray-700',
+        className
+      )}
       {...props}
     >
       {children}
@@ -294,7 +297,7 @@ const components: Components = {
 
   ol: ({ children, className, ...props }) => (
     <ol
-      className={cn(
+      className={twMerge(
         'my-4 list-decimal space-y-2 pl-6 text-gray-700',
         className
       )}
@@ -307,7 +310,10 @@ const components: Components = {
   // Enhanced paragraphs
   p: ({ children, className, ...props }) => (
     <p
-      className={cn('mb-4 leading-relaxed text-gray-700 last:mb-0', className)}
+      className={twMerge(
+        'mb-4 leading-relaxed text-gray-700 last:mb-0',
+        className
+      )}
       {...props}
     >
       {children}
@@ -317,7 +323,7 @@ const components: Components = {
 
 export function Markdown({ content, className }: MarkdownProps) {
   return (
-    <div className={cn('prose prose-gray max-w-none', className)}>
+    <div className={twMerge('prose prose-gray max-w-none', className)}>
       <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
         {content}
       </ReactMarkdown>

@@ -5,7 +5,25 @@
 
 import { Container, Section, TagBadge } from '@velvele/components/ui';
 
+import type { Metadata } from 'next';
 import { getAllTags } from '@velvele/lib/blog/tags';
+
+export const metadata: Metadata = {
+  title: 'Etiketler | Velvele',
+  description:
+    'Blog yazılarımızı kategorilere göre keşfedin. Teknoloji, yazılım ve dijital dünya hakkında yazılar.',
+  openGraph: {
+    title: 'Etiketler | Velvele',
+    description: 'Blog yazılarımızı kategorilere göre keşfedin.',
+    type: 'website',
+    url: 'https://velvele.net/etiket',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Etiketler | Velvele',
+    description: 'Blog yazılarımızı kategorilere göre keşfedin.',
+  },
+};
 
 export default async function TagsPage() {
   const tags = await getAllTags('tr');

@@ -4,7 +4,7 @@
  */
 
 import { Button } from './Button';
-import { cn } from '@velvele/lib/utils';
+import { twMerge } from 'tailwind-merge';
 
 interface EmptyStateProps {
   title: string;
@@ -26,7 +26,7 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div
-      className={cn(
+      className={twMerge(
         'flex flex-col items-center justify-center py-12 text-center',
         className
       )}

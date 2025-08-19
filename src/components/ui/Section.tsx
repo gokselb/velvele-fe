@@ -3,7 +3,7 @@
  * Provides semantic structure with proper spacing
  */
 
-import { cn } from '@velvele/lib/utils';
+import { twMerge } from 'tailwind-merge';
 
 interface SectionProps {
   children: React.ReactNode;
@@ -13,10 +13,10 @@ interface SectionProps {
 }
 
 const spacingClasses = {
-  sm: 'py-8',
-  md: 'py-12',
-  lg: 'py-16',
-  xl: 'py-24',
+  sm: twMerge('py-8'),
+  md: twMerge('py-12'),
+  lg: twMerge('py-16'),
+  xl: twMerge('py-24'),
 };
 
 export function Section({
@@ -26,7 +26,7 @@ export function Section({
   as: Component = 'section',
 }: SectionProps) {
   return (
-    <Component className={cn(spacingClasses[spacing], className)}>
+    <Component className={twMerge(spacingClasses[spacing], className)}>
       {children}
     </Component>
   );

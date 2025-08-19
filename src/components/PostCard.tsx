@@ -25,14 +25,14 @@ export function PostCard({ post, className }: PostCardProps) {
     <article className={`group space-y-4 ${className || ''}`}>
       {/* Cover Image */}
       {cover_url && (
-        <div className="aspect-[16/9] overflow-hidden rounded-lg bg-gray-100">
-          <a href={postUrl} className="block h-full w-full">
+        <div className="aspect-[4/3] overflow-hidden rounded-lg bg-gray-100 max-h-64 sm:max-h-72 lg:max-h-80">
+          <a href={postUrl} className="block h-full w-full relative">
             <Image
               src={cover_url}
               alt={title}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
           </a>
         </div>

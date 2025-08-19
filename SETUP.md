@@ -59,10 +59,11 @@ const supabase = createSupabaseServerClient();
 ### Utility Functions
 
 ```typescript
-import { cn, formatDate, formatDateDistance } from '@/lib/utils';
+import { formatDate, formatDateDistance } from '@/lib/utils';
+import { twMerge } from 'tailwind-merge';
 
 // Combine CSS classes
-const className = cn('base-class', condition && 'conditional-class');
+const className = twMerge('base-class', condition && 'conditional-class');
 
 // Format dates
 const formatted = formatDate(new Date(), 'PPP');
