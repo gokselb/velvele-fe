@@ -7,6 +7,7 @@ import { EmptyState, SkeletonPost } from './ui';
 
 import { PostCard } from './PostCard';
 import type { PostWithAuthorAndTags } from '@velvele/lib/supabase';
+import { twMerge } from 'tailwind-merge';
 
 interface PostListProps {
   posts: PostWithAuthorAndTags[];
@@ -35,11 +36,12 @@ export function PostList({
     const skeletonCount = layout === 'grid' ? 8 : 3;
     return (
       <div
-        className={`${
+        className={twMerge(
           layout === 'grid'
             ? 'grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-            : 'space-y-12'
-        } ${className || ''}`}
+            : 'space-y-12',
+          className
+        )}
       >
         {Array.from({ length: skeletonCount }).map((_, index) => (
           <SkeletonPost key={index} />
@@ -81,11 +83,12 @@ export function PostList({
   // Posts list
   return (
     <div
-      className={`${
+      className={twMerge(
         layout === 'grid'
           ? 'grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-          : 'space-y-12'
-      } ${className || ''}`}
+          : 'space-y-12',
+        className
+      )}
     >
       {posts.map((post) => (
         <PostCard

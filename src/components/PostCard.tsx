@@ -18,8 +18,8 @@ export function PostCard({ post, className }: PostCardProps) {
   const { title, excerpt, cover_url, slug, lang, published_at, author, tags } =
     post;
 
-  const postUrl = `/${lang}/posts/${slug}`;
-  const authorUrl = author ? `/${lang}/authors/${author.slug}` : undefined;
+  const postUrl = `/posts/${slug}`;
+  const authorUrl = author ? `/authors/${author.slug}` : undefined;
 
   return (
     <article className={`group space-y-4 ${className || ''}`}>

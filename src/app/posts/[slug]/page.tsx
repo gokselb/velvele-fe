@@ -107,7 +107,7 @@ export default async function PostPage({ params }: PostPageProps) {
       <Container>
         <Section spacing="lg">
           {post.cover_url && (
-            <div className="mb-8 aspect-[21/9] overflow-hidden rounded-2xl bg-gray-100">
+            <div className="mb-8 aspect-[21/9] relative overflow-hidden rounded-2xl bg-gray-100">
               <Image
                 src={post.cover_url}
                 alt={post.title}
