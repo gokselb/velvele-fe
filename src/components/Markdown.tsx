@@ -14,6 +14,7 @@ import {
 
 import type { Components } from 'react-markdown';
 import Image from 'next/image';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { twMerge } from 'tailwind-merge';
@@ -114,7 +115,7 @@ const components: Components = {
 
     if (isWhitelisted) {
       return (
-        <figure className="my-6">
+        <div className="my-6">
           <div className="relative aspect-video w-full overflow-hidden rounded-lg">
             <Image
               src={src}
@@ -125,17 +126,17 @@ const components: Components = {
             />
           </div>
           {caption && (
-            <figcaption className="mt-2 text-center text-sm text-gray-600">
+            <div className="mt-2 text-center text-sm text-gray-600">
               {caption}
-            </figcaption>
+            </div>
           )}
-        </figure>
+        </div>
       );
     }
 
     // Fallback to regular img for non-whitelisted domains
     return (
-      <figure className="my-6">
+      <div className="my-6">
         <img
           src={src}
           alt={imageAlt || ''}
@@ -143,11 +144,11 @@ const components: Components = {
           {...props}
         />
         {caption && (
-          <figcaption className="mt-2 text-center text-sm text-gray-600">
+          <div className="mt-2 text-center text-sm text-gray-600">
             {caption}
-          </figcaption>
+          </div>
         )}
-      </figure>
+      </div>
     );
   },
 
@@ -273,17 +274,34 @@ const components: Components = {
   ),
 
   // Enhanced paragraphs
-  p: ({ children, className, ...props }) => (
-    <p
-      className={twMerge(
-        'mb-4 leading-relaxed text-gray-700 last:mb-0',
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </p>
-  ),
+  p: ({ children, className, ...props }) => {
+    // Filter out img elements to prevent them from being wrapped in p tags
+    const filteredChildren = React.Children.toArray(children).filter(
+      (child) => {
+        if (React.isValidElement(child) && child.type === 'img') {
+          return false;
+        }
+        return true;
+      }
+    );
+
+    // If no children remain after filtering, don't render the paragraph
+    if (filteredChildren.length === 0) {
+      return null;
+    }
+
+    return (
+      <p
+        className={twMerge(
+          'mb-4 leading-relaxed text-gray-700 last:mb-0',
+          className
+        )}
+        {...props}
+      >
+        {filteredChildren}
+      </p>
+    );
+  },
 };
 
 export function Markdown({ content, className }: MarkdownProps) {
